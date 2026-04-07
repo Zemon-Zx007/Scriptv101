@@ -9,33 +9,27 @@ app.use(express.json());
 // --- [ ตั้งค่ารหัสผ่านของซีม่อน ] ---
 const ADMIN_PASSWORD = "zemon1234"; 
 
-// ข้อมูลเริ่มต้น
-let scripts = [
-    { 
-        name: "Swift X Hub V1", 
-        code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Zemon/Example/main/script.lua'))()", 
-        image: "https://i.ibb.co/h1tScGHD/Lightning-Update-Blox-Fruits.jpg" 
-    }
-];
+// เริ่มต้นให้เป็นลิสต์ว่างเปล่าตามที่ซีม่อนบอกนะค้าบ
+let scripts = [];
 
 // --- [ หน้าหลัก: Swift X Hub ] ---
 app.get('/', (req, res) => {
-    let scriptCards = scripts.map(s => `
+    let scriptCards = scripts.length > 0 ? scripts.map(s => `
         <div style="background:#151515; border-radius:20px; overflow:hidden; border:1px solid #222; margin-bottom:25px; box-shadow: 0 8px 16px rgba(0,0,0,0.6);">
             <img src="${s.image}" style="width:100%; height:200px; object-fit:cover; border-bottom:1px solid #222;">
             <div style="padding:20px;">
-                <h3 style="color:#ff0000; margin:0 0 5px 0; font-size:1.5rem; font-weight:bold;">${s.name}</h3>
+                <h3 style="color:#ff0000; margin:0 0 10px 0; font-size:1.5rem; font-weight:bold;">${s.name}</h3>
                 
-                <button onclick="copyToClipboard('${s.code}')" style="width:100%; background:#ff0000; color:#fff; border:none; padding:12px; cursor:pointer; border-radius:10px; font-weight:bold; font-size:1rem; margin-bottom:15px; margin-top:10px; transition: 0.3s active;">
-                    <i class="fas fa-copy"></i> คัดลอกสคริปต์
-                </button>
-
-                <div style="background:#0a0a0a; padding:10px; border-radius:8px; border:1px dashed #333; pointer-events: none; user-select: none;">
+                <div style="background:#0a0a0a; padding:12px; border-radius:10px; border:1px dashed #333; pointer-events: none; user-select: none; margin-bottom:15px;">
                     <code style="color:#666; font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block;">${s.code}</code>
                 </div>
+
+                <button onclick="copyToClipboard('${s.code}')" style="width:100%; background:#ff0000; color:#fff; border:none; padding:14px; cursor:pointer; border-radius:12px; font-weight:bold; font-size:1rem; transition: 0.2s;">
+                    <i class="fas fa-copy"></i> คัดลอกสคริปต์
+                </button>
             </div>
         </div>
-    `).join('');
+    `).join('') : '<p style="text-align:center; color:#333; margin-top:50px;">ยังไม่มีสคริปต์ในขณะนี้...</p>';
 
     res.send(`
         <!DOCTYPE html>
@@ -52,7 +46,7 @@ app.get('/', (req, res) => {
                 h1 { color:#ff0000; text-align:center; font-size:2.8rem; font-weight:800; margin-bottom:5px; letter-spacing: -1px; }
                 h1 span { color:#fff; }
                 p.subtitle { text-align:center; color:#555; margin-bottom:35px; font-size:0.9rem; }
-                button:active { transform: scale(0.98); background:#cc0000; }
+                button:active { transform: scale(0.95); background:#cc0000; }
             </style>
             <script>
                 function copyToClipboard(text) {
@@ -77,7 +71,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-// --- [ หน้าหลังบ้าน: ปรับโทนแดง ] ---
+// --- [ หน้าหลังบ้าน ] ---
 app.get('/admin', (req, res) => {
     res.send(`
         <html>
@@ -86,11 +80,11 @@ app.get('/admin', (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Swift X Admin</title>
             <style>
-                body { background:#0a0a0a; color:#fff; font-family: sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
+                body { background:#0a0a0a; color:#fff; font-family: 'Kanit', sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
                 .form-box { background:#151515; padding:30px; border-radius:20px; border:1px solid #ff0000; width:90%; max-width:400px; box-shadow: 0 0 20px rgba(255,0,0,0.1); }
-                input { width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #333; background:#000; color:#fff; box-sizing: border-box; outline:none; }
+                input { width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #333; background:#000; color:#fff; box-sizing: border-box; outline:none; font-family: 'Kanit', sans-serif; }
                 input:focus { border-color: #ff0000; }
-                button { width:100%; padding:15px; background:#ff0000; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1rem; }
+                button { width:100%; padding:15px; background:#ff0000; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1rem; font-family: 'Kanit', sans-serif; }
                 label { display:block; margin-bottom:5px; color:#666; font-size:0.8rem; }
             </style>
         </head>
