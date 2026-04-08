@@ -12,19 +12,19 @@ const ADMIN_PASSWORD = "zemon1234";
 // รายการสคริปต์
 let scripts = [];
 
-// ลิงก์รูปพื้นหลังที่ซีม่อนให้มา
+// ลิงก์รูปพื้นหลัง
 const BG_URL = "https://i.ibb.co/prjHGm9h/Unknown.jpg";
 
 // --- [ หน้าหลัก: Swift X Hub ] ---
 app.get('/', (req, res) => {
     let scriptCards = scripts.length > 0 ? scripts.map((s, index) => `
-        <div style="background:rgba(21, 21, 21, 0.9); border-radius:20px; overflow:hidden; border:1px solid #333; margin-bottom:25px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); backdrop-filter: blur(5px);">
+        <div style="background:rgba(21, 21, 21, 0.85); border-radius:20px; overflow:hidden; border:1px solid #333; margin-bottom:25px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
             <img src="${s.image}" style="width:100%; height:200px; object-fit:cover; border-bottom:1px solid #222;">
             <div style="padding:20px;">
                 <h3 style="color:#ff0000; margin:0 0 10px 0; font-size:1.5rem; font-weight:bold;">${s.name}</h3>
                 
                 <div style="background:rgba(0,0,0,0.7); padding:12px; border-radius:10px; border:1px dashed #444; pointer-events: none; user-select: none; margin-bottom:15px;">
-                    <code style="color:#999; font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block;">${s.code}</code>
+                    <code style="color:#bbb; font-size:0.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block;">${s.code}</code>
                 </div>
 
                 <button onclick="copyToClipboard('${s.code}', this)" style="width:100%; background:#ff0000; color:#fff; border:none; padding:14px; cursor:pointer; border-radius:12px; font-weight:bold; font-size:1rem; transition: 0.2s; position:relative;">
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
                 </button>
             </div>
         </div>
-    `).join('') : '<p style="text-align:center; color:#ccc; margin-top:50px; background:rgba(0,0,0,0.5); padding:20px; border-radius:10px;">ยังไม่มีสคริปต์ในขณะนี้...</p>';
+    `).join('') : '<p style="text-align:center; color:#fff; margin-top:50px; background:rgba(0,0,0,0.6); padding:20px; border-radius:15px; backdrop-filter: blur(5px);">ยังไม่มีสคริปต์ในขณะนี้...</p>';
 
     res.send(`
         <!DOCTYPE html>
@@ -45,7 +45,8 @@ app.get('/', (req, res) => {
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap');
                 body { 
-                    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${BG_URL}');
+                    /* ปรับ rgba เป็น 0.4 เพื่อให้รูปชัดขึ้นมาก */
+                    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${BG_URL}');
                     background-size: cover;
                     background-position: center;
                     background-attachment: fixed;
@@ -55,9 +56,9 @@ app.get('/', (req, res) => {
                     margin:0; 
                 }
                 .container { max-width:500px; margin:auto; padding-top:20px; }
-                h1 { color:#ff0000; text-align:center; font-size:2.8rem; font-weight:800; margin-bottom:5px; letter-spacing: -1px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+                h1 { color:#ff0000; text-align:center; font-size:2.8rem; font-weight:800; margin-bottom:5px; letter-spacing: -1px; text-shadow: 2px 2px 15px rgba(0,0,0,1); }
                 h1 span { color:#fff; }
-                p.subtitle { text-align:center; color:#ddd; margin-bottom:35px; font-size:0.9rem; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+                p.subtitle { text-align:center; color:#fff; margin-bottom:35px; font-size:0.9rem; text-shadow: 1px 1px 8px rgba(0,0,0,1); font-weight: 500; }
                 .copy-success { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#00ff00; color:#000; padding:10px 20px; border-radius:50px; font-weight:bold; display:none; z-index:1000; box-shadow:0 0 15px rgba(0,255,0,0.5); }
             </style>
             <script>
@@ -91,13 +92,13 @@ app.get('/', (req, res) => {
     `);
 });
 
-// --- [ ส่วนของหน้าหลังบ้านพร้อมรูปพื้นหลัง ] ---
+// --- [ ส่วนของหน้าหลังบ้าน ] ---
 const adminHeader = `
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap');
         body { 
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('${BG_URL}');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${BG_URL}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -105,15 +106,16 @@ const adminHeader = `
             font-family: 'Kanit', sans-serif; 
             margin:0; 
         }
-        .nav-btn { position:fixed; top:20px; left:20px; font-size:24px; color:#ff0000; cursor:pointer; z-index:1001; text-shadow: 2px 2px 5px rgba(0,0,0,0.8); }
-        .sidebar { height:100%; width:0; position:fixed; z-index:1000; top:0; left:0; background:rgba(17,17,17,0.95); overflow-x:hidden; transition:0.3s; padding-top:60px; border-right:1px solid #ff0000; backdrop-filter: blur(10px); }
-        .sidebar a { padding:15px 32px; text-decoration:none; font-size:18px; color:#ccc; display:block; transition:0.3s; }
+        .nav-btn { position:fixed; top:20px; left:20px; font-size:24px; color:#ff0000; cursor:pointer; z-index:1001; text-shadow: 2px 2px 8px rgba(0,0,0,1); }
+        .sidebar { height:100%; width:0; position:fixed; z-index:1000; top:0; left:0; background:rgba(10,10,10,0.9); overflow-x:hidden; transition:0.3s; padding-top:60px; border-right:1px solid #ff0000; backdrop-filter: blur(15px); }
+        .sidebar a { padding:15px 32px; text-decoration:none; font-size:18px; color:#eee; display:block; transition:0.3s; }
         .sidebar a:hover { color:#ff0000; background:rgba(255,0,0,0.1); }
         .admin-container { display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
-        .form-box { background:rgba(21, 21, 21, 0.9); padding:30px; border-radius:20px; border:1px solid #ff0000; width:100%; max-width:400px; box-shadow: 0 0 30px rgba(0,0,0,1); backdrop-filter: blur(5px); }
-        input, select { width:100%; padding:14px; margin-bottom:15px; border-radius:10px; border:1px solid #333; background:rgba(0,0,0,0.8); color:#fff; box-sizing: border-box; font-family: 'Kanit', sans-serif; outline:none; }
-        input:focus { border-color:#ff0000; }
-        button { width:100%; padding:15px; background:#ff0000; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:1rem; font-family: 'Kanit', sans-serif; box-shadow: 0 4px 10px rgba(255,0,0,0.3); }
+        .form-box { background:rgba(20, 20, 20, 0.85); padding:30px; border-radius:25px; border:1px solid #ff0000; width:100%; max-width:400px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
+        input, select { width:100%; padding:14px; margin-bottom:15px; border-radius:12px; border:1px solid #444; background:rgba(0,0,0,0.8); color:#fff; box-sizing: border-box; font-family: 'Kanit', sans-serif; outline:none; }
+        input:focus { border-color:#ff0000; box-shadow: 0 0 10px rgba(255,0,0,0.2); }
+        button { width:100%; padding:15px; background:#ff0000; color:#fff; border:none; border-radius:12px; font-weight:bold; cursor:pointer; font-size:1rem; font-family: 'Kanit', sans-serif; transition: 0.3s; box-shadow: 0 4px 15px rgba(255,0,0,0.4); }
+        button:hover { background:#cc0000; transform: translateY(-2px); }
         button:active { transform: scale(0.98); }
     </style>
     <div class="nav-btn" onclick="toggleNav()"><i class="fas fa-bars"></i></div>
@@ -139,10 +141,10 @@ app.get('/admin', (req, res) => {
             ${adminHeader}
             <div class="admin-container">
                 <div class="form-box">
-                    <h2 style="color:#ff0000; text-align:center; margin-top:0; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">เพิ่มสคริปต์ใหม่</h2>
+                    <h2 style="color:#ff0000; text-align:center; margin-top:0; text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">เพิ่มสคริปต์ใหม่</h2>
                     <form action="/add-script" method="POST">
                         <input type="password" name="password" placeholder="รหัสผ่านแอดมิน" required>
-                        <hr style="border:0.5px solid #333; margin:20px 0;">
+                        <hr style="border:0.5px solid #444; margin:20px 0;">
                         <input type="text" name="name" placeholder="ชื่อสคริปต์" required>
                         <input type="text" name="code" placeholder="โค้ดสคริปต์ (loadstring...)" required>
                         <input type="text" name="image" placeholder="ลิงก์รูปภาพ (Direct Link)" required>
@@ -164,14 +166,14 @@ app.get('/admin/delete', (req, res) => {
             ${adminHeader}
             <div class="admin-container">
                 <div class="form-box" style="border-color:#555;">
-                    <h2 style="color:#fff; text-align:center; margin-top:0;">ลบสคริปต์ออก</h2>
+                    <h2 style="color:#fff; text-align:center; margin-top:0; text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">ลบสคริปต์ออก</h2>
                     <form action="/delete-script" method="POST">
                         <input type="password" name="password" placeholder="รหัสผ่านแอดมิน" required>
-                        <hr style="border:0.5px solid #333; margin:20px 0;">
+                        <hr style="border:0.5px solid #444; margin:20px 0;">
                         <select name="scriptIndex" required>
                             ${options || '<option disabled>ไม่มีสคริปต์ให้ลบ</option>'}
                         </select>
-                        <button type="submit" style="background:#333;">ยืนยันการลบ</button>
+                        <button type="submit" style="background:#333; box-shadow: none;">ยืนยันการลบ</button>
                     </form>
                 </div>
             </div>
